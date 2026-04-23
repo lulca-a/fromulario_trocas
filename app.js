@@ -36,7 +36,7 @@ form.addEventListener('submit',function(event){
     }else{
         console.log(troca);
 
-        fetch('http://127.0.0.1:5500/troca',{
+        fetch('http://127.0.0.1:5000/troca',{
             method:'POST',
             headers:{"Content-Type": "application/json"},
             body:JSON.stringify(troca)
@@ -51,7 +51,7 @@ form.addEventListener('submit',function(event){
         }).then(function(dados){
             console.log(dados)
 
-            alert('Dados enviados com sucesso')
+            alert(`Troca Realizada\n ${dados.pessoa_1}(${dados.dia_1}-${dados.turno_1})\n ${dados.pessoa_2}(${dados.dia_2}-${dados.turno_2})`)
             form.reset()
             botao.disabled = false
             botao.style.backgroundColor = '#333'
