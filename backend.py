@@ -6,13 +6,13 @@ campos  =['pessoa_1','pessoa_2','dia_1','dia_2','turno_1','turno_2']
 
 app = Flask(__name__)
 CORS(app)
-lista = []
 
-@app.route('/troca',methods=['POST'])
+lista = []#futuramente será substituído um banco de dados estruturado
 def salvar_troca(dados):
     dados['id_troca'] = len(lista)+1
     lista.append(dados)
-
+    
+@app.route('/troca',methods=['POST'])
 def troca():
     dados = request.json
     for campo in campos:
@@ -30,4 +30,8 @@ def troca():
             'dia_2':dados['dia_2'],
             'turno_2':dados['turno_2']
         })
+
+@app.route('/troca',method=['GET']
+def read_troca():
+    ...
 app.run(debug= True)
