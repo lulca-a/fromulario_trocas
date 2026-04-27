@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import secrets
 
 pessoas = ['João','Maria','Carlos']
 campos  =['pessoa_1','pessoa_2','dia_1','dia_2','turno_1','turno_2']
@@ -13,10 +14,20 @@ CORS(app)
 
 lista = []#futuramente será substituído um banco de dados estruturado
 def salvar_troca(dados):
-    dados['id_troca'] = len(lista)+1
-    lista.append(dados)
+          dados['id_troca'] = len(lista)+1
+          dados['status_1'] = 'pendente'
+          dados['status_2'] = 'pendente'
+          dados['status_admin'] = 'pendente'
+          dados['token_1'] = secrets.token_urlsafe(16)
+          dados['token_2'] = secrets.token_urlsafe(16)
+          dados['token_admin'] = secrets.token_urlsafe(16)
+          lista.append(dados)
 
 def enviar_email(dados):
+    link_email_1 = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_1']}' 
+    link_email_2 = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_2']}'
+    link_email_admin = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_2']}'
+
     print('emal eviado para', email[dados['pessoa_1']])
     print('emal eviado para', email[dados['pessoa_2']])
     print('emal eviado para', email_admin)
@@ -42,15 +53,25 @@ def troca():
             'turno_1':dados['turno_1'],
             'pessoa_2':dados['pessoa_2'],
             'dia_2':dados['dia_2'],
-            'turno_2':dados['turno_2']
+            'turno_2':dados['turno_2'],
+            'status_1':dados['status_1'],
+            'status_2':dados['status_1'],
+            'status_admin':dados['status_1'],          
         })
     
 @app.route('/aprovar',methods=['POST'])
-def aprovar():
-    dados = 'read_db("id_troca")'
-    dados['status_1'] = 'OK'
-    dados['status_2'] = 'OK'
-    dados['status_admin'] = 'OK'
-    print('troca efetuada!')
+def aprovar(email_resposta):
+    id = request.args.get('id')
+    token = request.args.get('token')          
+    for i in lista:
+              if i['id_troca'] = id:
+                   if token == dados['token_1']:
+                              dados['status_2'] = 'OK'                                  
+                   elif token == dados['token_2']
+                               dados['status_2'] = 'OK'
+                   elif token == dados['token_admin']
+                               dados['status_admin'] = 'OK'
+    
+print('troca efetuada!')
     
 app.run(debug= True)
