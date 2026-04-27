@@ -1,7 +1,5 @@
 function gerar_troca(){
     let troca ={
-        troca_id : 123,
-        
         pessoa_1:document.getElementById('pessoa1').value,
         dia_1:document.getElementById('dia1').value,
         turno_1:document.getElementById('turno1').value,
