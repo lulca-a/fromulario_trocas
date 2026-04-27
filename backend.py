@@ -24,9 +24,9 @@ def salvar_troca(dados):
           lista.append(dados)
 
 def enviar_email(dados):
-    link_email_1 = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_1']}' 
-    link_email_2 = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_2']}'
-    link_email_admin = f'http://127.0.0.1:5000/aprovar?id={dados['id_troca']}&token={dados['token_2']}'
+    link_email_1 = f'http://127.0.0.1:5000/aprovar?id={dados["id_troca"]}&token={dados["token_1"]}' 
+    link_email_2 = f'http://127.0.0.1:5000/aprovar?id={dados["id_troca"]}&token={dados["token_2"]}'
+    link_email_admin = f'http://127.0.0.1:5000/aprovar?id={dados["id_troca"]}&token={dados["token_admin"]}'
 
     print('emal eviado para', email[dados['pessoa_1']])
     print('emal eviado para', email[dados['pessoa_2']])
@@ -55,23 +55,25 @@ def troca():
             'dia_2':dados['dia_2'],
             'turno_2':dados['turno_2'],
             'status_1':dados['status_1'],
-            'status_2':dados['status_1'],
-            'status_admin':dados['status_1'],          
+            'status_2':dados['status_2'],
+            'status_admin':dados['status_admin'],          
         })
     
-@app.route('/aprovar',methods=['POST'])
-def aprovar(email_resposta):
-    id = request.args.get('id')
+@app.route('/aprovar',methods=['GET'])
+def aprovar():
+    id = int(request.args.get('id'))
     token = request.args.get('token')          
     for i in lista:
-              if i['id_troca'] = id:
-                   if token == dados['token_1']:
-                              dados['status_2'] = 'OK'                                  
-                   elif token == dados['token_2']
-                               dados['status_2'] = 'OK'
-                   elif token == dados['token_admin']
-                               dados['status_admin'] = 'OK'
-    
-print('troca efetuada!')
+              if i['id_troca'] == id:
+                   if token == i['token_1']:
+                             i['status_1'] = 'OK'
+                             break
+                   elif token == i['token_2']:
+                     i['status_2'] = 'OK'
+                               break
+                   elif token == i['token_admin']:
+                               i['status_admin'] = 'OK'
+                                  break
+    return jsonfy({'mensagem' :'troca efetuada')
     
 app.run(debug= True)
