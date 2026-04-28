@@ -28,10 +28,10 @@ def enviar_email(dados):
     link_email_2 = f'http://127.0.0.1:5000/aprovar?id={dados["id_troca"]}&token={dados["token_2"]}'
     link_email_admin = f'http://127.0.0.1:5000/aprovar?id={dados["id_troca"]}&token={dados["token_admin"]}'
 
-    print('emal eviado para', email[dados['pessoa_1']])
-    print('emal eviado para', email[dados['pessoa_2']])
-    print('emal eviado para', email_admin)
-    
+    print('emal eviado para', email[dados['pessoa_1']], 'com o link', link_email_1)
+    print('emal eviado para', email[dados['pessoa_2']], 'com o link', link_email_2)
+    print('emal eviado para', email_admin, 'com o link', link_email_admin)
+
 @app.route('/trocas',methods = ['GET'])
 def read_troca():
     return jsonify(lista)
@@ -67,12 +67,15 @@ def aprovar():
         if i['id_troca'] == id:
             if token == i['token_1']:
                 i['status_1'] = 'OK'
+                print('id', id, 'token', token, 'status_1', i['status_1'])
                 break
             elif token == i['token_2']:
                 i['status_2'] = 'OK'
+                print('id', id, 'token', token, 'status_2', i['status_2'])
                 break
             elif token == i['token_admin']:
                 i['status_admin'] = 'OK'
+                print('id', id, 'token', token, 'status_admin', i['status_admin'])
                 break
     return jsonify({'mensagem' :'troca efetuada'})
     

@@ -49,7 +49,7 @@ form.addEventListener('submit',function(event){
         }).then(function(dados){
             console.log(dados)
 
-            alert(`Troca Realizada\n ${dados.pessoa_1}(${dados.dia_1}-${dados.turno_1})\n ${dados.pessoa_2}(${dados.dia_2}-${dados.turno_2})`)
+            alert(`Troca Realizada\n ${JSON.stringify(dados,null,2)})`)
             form.reset()
             botao.disabled = false
             botao.style.backgroundColor = '#333'
