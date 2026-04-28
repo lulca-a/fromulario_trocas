@@ -64,16 +64,16 @@ def aprovar():
     id = int(request.args.get('id'))
     token = request.args.get('token')          
     for i in lista:
-              if i['id_troca'] == id:
-                   if token == i['token_1']:
-                             i['status_1'] = 'OK'
-                             break
-                   elif token == i['token_2']:
-                     i['status_2'] = 'OK'
-                               break
-                   elif token == i['token_admin']:
-                               i['status_admin'] = 'OK'
-                                  break
-    return jsonfy({'mensagem' :'troca efetuada')
+        if i['id_troca'] == id:
+            if token == i['token_1']:
+                i['status_1'] = 'OK'
+                break
+            elif token == i['token_2']:
+                i['status_2'] = 'OK'
+                break
+            elif token == i['token_admin']:
+                i['status_admin'] = 'OK'
+                break
+    return jsonify({'mensagem' :'troca efetuada'})
     
 app.run(debug= True)
